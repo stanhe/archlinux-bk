@@ -9,7 +9,7 @@ mkfs.ext4 /dev/sda5
 mkfs.ext4 /dev/sda7
 mkfs.ext4 /dev/sda8
 mkfs.ext4 /dev/sda9
-mount /dev/sda5 /mnt
+mount /dev/sda5 /mnt 
 mount /dev/sda7 /mnt/boot
 mount /dev/sda8 /mnt/var
 mount /dev/sda9 /mnt/home
@@ -20,7 +20,7 @@ pacman -Syy
 pacman -S archlinuxcn-keyring
 pacstrap -i /mnt base base-devel
 genfstab -U /mnt >> /mnt/etc/fstab
-arch-chroot /mnt
+echo """
 ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 hwclock --systohc
 echo -e "\n en_US.UTF-8 UFT-8\nzh_CN.UTF-8 UTF-8" | tee -a /ect/locale.gen
@@ -33,7 +33,11 @@ pacman -S grub os-prober
 grub-install --target=i386-pc --recheck /dev/sda
 grub-mkconfig -o /boot/grub/grub.cfg
 systemctl enable dhcpcd.service
+trap \"rm -rf /tmp/stan-config.sh\" EXIT
 exit
+""" > /mnt/tmp/stan-config.sh
+chmod +x /mnt/tmp/stan-config.sh
+arch-chroot /mnt /tmp/stan-config.sh
 umount -R /mnt
 echo "========== finish install system =========="
 sleep 3
