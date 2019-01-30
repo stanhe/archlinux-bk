@@ -1,8 +1,10 @@
 # Install archlinux automatically
 
 ## 安装 arch
-![install](http://pcnl48lkv.bkt.clouddn.com/arch/install.gif)
+![install](./screenshot/install.gif)
+
 下载最新的archlinux.iso文件
+
 烧录并启动 [my_iso](https://pan.baidu.com/s/1CtylqUOBIByXZ31u_ABveA)
 
 手动分区，使用cfdisk
